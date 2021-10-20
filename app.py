@@ -16,7 +16,7 @@ sp_client = spotipy.client.Spotify()
 @app.route("/")
 def index():
     if "token_info" not in session:
-        return render_template("index.html")
+        return render_template("login.html")
     else:
         sp_client.set_auth(session.get('token_info').get('access_token'))
         return "Salut " + sp_client.me()["display_name"] + " ! Ton artiste préféré est " + str(sp_client.current_user_top_artists(limit=1)["items"][0]["name"])
