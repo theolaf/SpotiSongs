@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
- <title></title>
-</head>
-<body>
-<h2>Log into your Spotify account</h2>
-<p align="center"><a href="{{ url_for('login') }}"><button class=grey style="height:75px;width:150px">Log In</button></a></p>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block content %}
+    <h2 align="center">Log into your Spotify account</h2>
+    <p align="center"><a href="{{ url_for('login') }}"><button class=grey style="height:75px;width:150px">Log In</button></a></p>
+{% endblock %}
