@@ -1,5 +1,11 @@
 {% extends "layout.html" %}
+{% block title %}
+  SpotiSongs - Login
+{% endblock %}
 {% block content %}
-    <h2 align="center">Log into your Spotify account</h2>
-    <p align="center"><a href="{{ url_for('login') }}"><button class=grey style="height:75px;width:150px">Log In</button></a></p>
+  <div class="container">
+    <h1>Welcome to SpotiSongs</h1>
+    <h2>Discover new music on Spotify through the power of AI!</h2>
+    <p><a href="{{ url_for('login') }}"><button>Log In</button></a></p>
+  </div>
 {% endblock %}
