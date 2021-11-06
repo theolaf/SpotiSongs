@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block title %}
+  SpotiSongs - Homepage
+{% endblock %}
+{% block content %}
+  <div class="home-container">
+    <h1>Welcome {{ name }}</h1>
+    <div class="column">
+      <div class="playlist" id="scroll">
+        {% for track in top_tracks %}
+          <iframe src="https://open.spotify.com/embed/track/{{ track }}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media">
+          </iframe>
+        {%endfor %}
+      </div>
+    </div>
+    <div class="column">
+      <div class="playlist" id="scroll">
+        {% for track in last_saves %}
+          <iframe src="https://open.spotify.com/embed/track/{{ track }}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media">
+          </iframe>
+        {%endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

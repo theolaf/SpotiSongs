@@ -20,8 +20,11 @@ def index():
     if "token_info" not in session: #if no token is available in the flask session, show login page
         return render_template("login.html")
     else: #if a token is available in the flask session, show home page
-        sp_client.set_auth(session.get('token_info').get('access_token'))
-        return "Salut " + sp_client.me()["display_name"] + " ! Ton artiste préféré est " + str(sp_client.current_user_top_artists(limit=1)["items"][0]["name"])
+        sp_client.set_auth(session.get('token_info').get('access_token')) #auth the spotipy client with the stored token
+        name = sp_client.me()["display_name"] #get user's name
+        top_tracks = [track["id"] for track in sp_client.current_user_top_tracks(limit=10)["items"]] #get user's top 10 tracks
+        last_saves = [track["track"]["id"] for track in sp_client.current_user_saved_tracks(limit=10)["items"]] #get user's last 10 saved tracks
+        return render_template("home.html", name=name, top_tracks=top_tracks, last_saves=last_saves)
 
 ###### AUTH PROTOCOL ######
 @app.route("/login")
