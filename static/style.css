@@ -22,6 +22,18 @@ h1{
   font-weight: bold;
 }
 
+h2{
+	margin: 0px;
+}
+
+p{
+	margin: 0px;
+}
+
+a:visited{
+	color: white;
+}
+
 button{
 		appearance: none;
 		outline: 0;
@@ -33,9 +45,10 @@ button{
 		width: 250px;
 		cursor: pointer;
 		font-size: 18px;
+		margin-top: 20px;
 }
 
-.container{
+.login-container{
 	max-width: 600px;
 	margin: 0 auto;
 	padding: 80px 0;
