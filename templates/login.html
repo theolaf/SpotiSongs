@@ -4,9 +4,11 @@
 {% endblock %}
 {% block content %}
   <div class="login-container">
-    <h1>Welcome to SpotiSongs</h1>
-    <h2>Discover new music on Spotify through the power of AI!</h2>
-    <p>For now, it just shows you your favourite songs though...</p>
-    <a href="{{ url_for('login') }}"><button>Log In</button></a>
+    <div class="login-panel">
+      <h1>Welcome to SpotiSongs</h1>
+      <h2>Discover new music on Spotify through the power of AI!</h2>
+      <p>For now, it just shows you your favourite songs though...</p>
+      <a href="{{ url_for('login') }}"><button>Log In</button></a>
+    </div>
   </div>
 {% endblock %}
