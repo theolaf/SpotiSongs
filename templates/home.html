@@ -6,7 +6,7 @@
   <div class="home-container">
     <h1 id="welcome">Welcome {{ name }}</h1>
     <div class="column">
-      <h2 id="playlist-name">Top 10 most played</h2>
+      <h2 id="playlist-name">Top 10 most played songs</h2>
       <div class="playlist" id="scroll">
         {% for track in top_tracks %}
           <iframe src="https://open.spotify.com/embed/track/{{ track }}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media">
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="column">
-      <h2 id="playlist-name">Most recently saved</h2>
+      <h2 id="playlist-name">Most recently saved songs</h2>
       <div class="playlist" id="scroll">
         {% for track in last_saves %}
           <iframe src="https://open.spotify.com/embed/track/{{ track }}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media">
