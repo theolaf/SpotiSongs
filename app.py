@@ -46,4 +46,5 @@ def api_callback(): #once the user has logged in, the app has to get the associa
     return redirect(url_for('index')) #redirect to the home page
 
 if __name__ == "__main__":
-    app.run()
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
