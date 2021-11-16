@@ -6,8 +6,4 @@ services:
       - "5000:5000"
     volumes:
       - .:/src
-    environment:
-      - CLIENT_ID
-      - CLIENT_SECRET
-      - REDIRECT_URI
-      - FLASK_SECRET
+    env_file: .env
