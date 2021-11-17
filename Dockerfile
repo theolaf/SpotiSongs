@@ -1,5 +1,5 @@
-FROM python:3.8-slim-buster
+FROM tiangolo/uwsgi-nginx:python3.6
 WORKDIR /src
 COPY . .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 CMD python app.py
