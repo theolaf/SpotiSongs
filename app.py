@@ -34,12 +34,13 @@ def index():
 
     cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
     auth_manager = SpotifyOAuth(client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri, scope=scope, cache_handler=cache_handler)
+    callback_code = request.args.get("code")
 
-    if request.args.get("code"): # if redirected from spotify login
-        auth_manager.get_access_token(request.args.get("code"))
+    if callback_code: # if redirected from spotify login
+        auth_manager.get_access_token(callback_code)
         return redirect('/')
 
-    if not auth_manager.validate_token(cache_handler.get_cached_token()): # render login when no token found
+    if not auth_manager.validate_token(cache_handler.get_cached_token()): # render login page when no token found
         return render_template("login.html", auth_url=auth_manager.get_authorize_url())
 
     try:
@@ -50,8 +51,11 @@ def index():
         last_saves = [track["track"]["id"] for track in sp_client.current_user_saved_tracks(limit=10)["items"]] # get user's last 10 saved tracks
         return render_template("home.html", name=name, top_tracks=top_tracks, last_saves=last_saves)
 
-    except spotipy.exceptions.SpotifyException as e: # if the token has expired, the user has to reconnect
-        return render_template("login.html", auth_url=auth_manager.get_authorize_url())
+    except spotipy.exceptions.SpotifyException as e:
+        if e.http_status == 403: #if the user isn't registered (Spotify API limitation)
+            return render_template("user_not_registered.html")
+        else: # for any other http status (401 for example if the token has timed out) simply redirect to login page
+            return render_template("login.html", auth_url=auth_manager.get_authorize_url())
 
 @app.route('/signout')
 def signout():

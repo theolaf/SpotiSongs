@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block title %}
+  SpotiSongs - Homepage
+{% endblock %}
+{% block content %}
+  <div class="login-container">
+    <div class="login-panel">
+      <h1>Sorry !</h1>
+      <h2>Unfortunately, you're not registered as an authorized user :(</h2>
+      <p>This is just a portfolio project, so the number of user is limited...</p>
+      <a href="{{ url_for('signout') }}"><button>Sign out</button></a>
+    </div>
+  </div>
+{% endblock %}
