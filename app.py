@@ -53,22 +53,6 @@ def index():
     except spotipy.exceptions.SpotifyException as e: # if the token has expired, the user has to reconnect
         return render_template("login.html", auth_url=auth_manager.get_authorize_url())
 
-###### AUTH PROTOCOL ######
-@app.route("/login")
-def login():
-    auth = SpotifyOAuth(client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri, scope=scope)
-    return redirect(auth.get_authorize_url()) #redirect to the spotify auth page
-
-@app.route("/api_callback")
-def api_callback(): #once the user has logged in, the app has to get the associated token and store it in the flask session
-    auth = SpotifyOAuth(client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri, scope=scope)
-    session.clear()
-    code = request.args.get('code') #get the code sent with the api callback
-    if code is not None:
-        token_info = auth.get_access_token(code) #get the token corresponding to the code sent by spotify
-        session["token_info"] = token_info #store the token in the flask session
-    return redirect(url_for('index')) #redirect to the home page
-
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
