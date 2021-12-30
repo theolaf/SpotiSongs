@@ -29,7 +29,6 @@ def session_cache_path():
 @app.route("/")
 def index():
     if not session.get('uuid'): # if visitor unknown create a new id
-        session.permanent = False
         session['uuid'] = str(uuid.uuid4())
 
     cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
