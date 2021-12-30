@@ -53,6 +53,15 @@ def index():
     except spotipy.exceptions.SpotifyException as e: # if the token has expired, the user has to reconnect
         return render_template("login.html", auth_url=auth_manager.get_authorize_url())
 
+@app.route('/signout')
+def signout():
+    try:
+        os.remove(session_cache_path())
+        session.clear()
+    except OSError as e:
+        print ("Error: %s - %s." % (e.filename, e.strerror))
+    return redirect('/')
+
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
