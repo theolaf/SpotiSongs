@@ -1,7 +1,7 @@
 
 # About the project
 **SpotiSongs** is a **Flask** webapp that helps you discover new music on Spotify.
-It is currently a **WIP**. For now, the app merely shows the user their top 10 most listened songs and 10 last saved songs.
+It is currently a **WIP**. For now, the app uses the Spotify recommendation system.
 
 # Getting started
 
