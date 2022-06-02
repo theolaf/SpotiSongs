@@ -11,6 +11,9 @@ client_secret = os.getenv('CLIENT_SECRET')
 redirect_uri = os.getenv('REDIRECT_URI')
 scope = ["user-library-read", "user-top-read"]
 
+###### CONST ######
+TRACKS_TO_PRINT = 5
+
 ###### CREATING THE FLASK APP AND SPOTIPY CLIENT ######
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET').encode('utf8')
@@ -23,11 +26,17 @@ if not os.path.exists(caches_folder):
     os.makedirs(caches_folder)
 
 def session_cache_path():
+    """
+        Returns the path to the cache directory
+    """
     return caches_folder + session.get('uuid')
 
 ###### HOME ######
 @app.route("/")
 def index():
+    """
+        Login and homepage flask function
+    """
     if not session.get('uuid'): # if visitor unknown create a new id
         session['uuid'] = str(uuid.uuid4())
 
@@ -46,9 +55,11 @@ def index():
         sp_client = spotipy.Spotify(auth_manager=auth_manager)
         name = sp_client.me()["display_name"] # get user's name
         print(name)
-        top_tracks = [track["id"] for track in sp_client.current_user_top_tracks(limit=10)["items"]] # get user's top 10 tracks
-        last_saves = [track["track"]["id"] for track in sp_client.current_user_saved_tracks(limit=10)["items"]] # get user's last 10 saved tracks
-        return render_template("home.html", name=name, top_tracks=top_tracks, last_saves=last_saves)
+        top_tracks = [track["id"] for track in sp_client.current_user_top_tracks(limit=TRACKS_TO_PRINT)["items"]] # get user's top 10 tracks
+        last_saves = [track["track"]["id"] for track in sp_client.current_user_saved_tracks(limit=TRACKS_TO_PRINT)["items"]] # get user's last 10 saved tracks
+        tt_rec = [track["id"] for track in sp_client.recommendations(seed_tracks=top_tracks, limit=30)["tracks"]]
+        ls_rec = [track["id"] for track in sp_client.recommendations(seed_tracks=last_saves, limit=30)["tracks"]]
+        return render_template("home.html", name=name, top_tracks=top_tracks, last_saves=last_saves, tt_rec=tt_rec, ls_rec=ls_rec)
 
     except spotipy.exceptions.SpotifyException as e:
         if e.http_status == 403: #if the user isn't registered (Spotify API limitation)
@@ -58,6 +69,9 @@ def index():
 
 @app.route('/signout')
 def signout():
+    """
+        Signs the user out of their Spotify account
+    """
     try:
         os.remove(session_cache_path())
         session.clear()
